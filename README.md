@@ -1,2 +1,3 @@
-# my-arch-config
-Documentation of My Arch Linux Configuration
+# Arch Linux
+
+Tweak & Peak Arch Linux Configuration, See Branches For Respective Devices

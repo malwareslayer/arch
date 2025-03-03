@@ -76,8 +76,9 @@ sudo homectl update $USER --capability-ambient-set="CAP_NET_ADMIN CAP_NET_RAW CA
 ```
 
 ```
-homectl update $USER \
+sudo homectl update malwareslayer \
              --setenv="AMD_VULKAN_ICD=RADV" \
+             --setenv="DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1=1" \
              --setenv="GALLIUM_DRIVER=zink" \
              --setenv="GDK_BACKEND=wayland" \
              --setenv="GNOME_KEYRING_CONTROL=/run/user/$(id -u)/keyring" \
@@ -85,15 +86,20 @@ homectl update $USER \
              --setenv="GOCACHE=$XDG_CACHE_HOME/go/" \
              --setenv="GOMODCACHE=$XDG_DATA_HOME/go/pkg/mod" \
              --setenv="GOPATH=$XDG_DATA_HOME/go" \
+             --setenv="GRADLE_USER_HOME=/var/user/$USER/gradle" \
+             --setenv="HSA_OVERRIDE_GFX_VERSION=11.0.3" \
+             --setenv="GSK_RENDERER=gl" \
+             --setenv="PYTORCH_ROCM_ARCH=gfx1103" \
              --setenv="LIBVA_DRIVER_NAME=radeonsi" \
-             --setenv="MESA_LOADER_DRIVER_OVERRIDE=radeonsi" \
+             --setenv="MESA_LOADER_DRIVER_OVERRIDE=zink" \
              --setenv="QT_AUTO_SCREEN_SCALE_FACTOR=1" \
-             --setenv="QT_QPA_PLATFORM=wayland" \
-             --setenv="QT_QPA_PLATFORMTHEME=qt5ct" \
-             --setenv="SSH_AUTH_SOCK=/run/user/$(id -u)/gnupg/S.gpg-agent.ssh" \
+             --setenv="QT_QPA_PLATFORM=xcb;wayland" \
+             --setenv="ROCM_PATH=/opt/rocm" \
+             --setenv="SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh" \
              --setenv="VDPAU_DRIVER=radeonsi" \
-             --setenv="VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/amd_pro_icd32.json:/usr/share/vulkan/icd.d/amd_pro_icd64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/lvp_icd.i686.json:/usr/share/vulkan/icd.d/lvp_icd.x86_64.json" \
-             --setenv="XDG_CACHE_HOME=$HOME/.cache" \
+             --setenv="VK_DRIVER_FILES=/usr/share/vulkan/icd.d/amd_pro_icd64.json:/usr/share/vulkan/icd.d/amd_pro_icd32.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json" \
+             --setenv="VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/amd_pro_icd64.json:/usr/share/vulkan/icd.d/amd_pro_icd32.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json" \
+             --setenv="XDG_CACHE_HOME=/var/user/$USER/cache" \
              --setenv="XDG_CONFIG_DIRS=/etc/xdg" \
              --setenv="XDG_CONFIG_HOME=$HOME/.config" \
              --setenv="XDG_DATA_DIRS=/usr/share:/usr/local/share:$XDG_DATA_HOME:$XDG_DATA_HOME/flatpak/exports/share:/var/lib/flatpak/exports/share" \

@@ -26,3 +26,4 @@ RestrictSUIDSGID=true
 
 [Install]
 WantedBy=default.target
+

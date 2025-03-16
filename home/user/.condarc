@@ -1,7 +1,12 @@
+pkgs_dirs:
+  - /var/user/malwareslayer/conda/pkgs
+envs_dirs:
+  - /var/user/malwareslayer/conda/envs
 auto_activate_base: false
 channels:
   - defaults
   - conda-forge
+  - pytorch
 channel_priority: strict
 create_default_packages:
   - python

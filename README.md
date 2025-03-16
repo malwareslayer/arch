@@ -1,31 +1,5 @@
 # Setup
 
-## Logical Volume Management
-
-### Physical Volume
-
-```
-pvcreate --dataalignment 1m --metadatasize 2m /dev/nvmeXnYpZ
-```
-
-### Volume Group
-
-```
-vgcreate --physicalextentsize 16m system /dev/nvmeXnYpZ
-```
-
-```
-vgcreate --physicalextentsize 16m home /dev/nvmeXnYpZ
-```
-
-### Logical Volume
-
-For `root`
-
-```
-lvcreate -l+100%FREE --name system root
-```
-
 ## File System
 
 ```
@@ -35,12 +9,6 @@ mkfs.fat -F 32 /dev/nvmeXnYpZ
 **Note**: some `/boot` should be for bootable extended
 
 ### File System Root & User
-
-For `root`
-
-```
-mkfs.ext4 -O 64bit,bigalloc,dir_index,dir_nlink,ea_inode,ext_attr,extent,encrypt,extra_isize,fast_commit,filetype,flex_bg,has_journal,huge_file,inline_data,large_dir,large_file,metadata_csum,metadata_csum_seed,orphan_file,orphan_present,resize_inode,sparse_super,sparse_super2,stable_inodes,verity /dev/system/root
-```
 
 For `<username>`
 
@@ -68,11 +36,11 @@ homectl create <username> \
 After Installation
 
 ```
-sudo homectl update $USER --member-of="adm,audio,dbus,network,power,realtime,render,storage,uuidd,video,wheel"
+sudo homectl update $USER --member-of="adm android-sdk audio dbus kvm network power proc realtime render rtkit storage uuidd video wheel"
 ```
 
 ```
-sudo homectl update $USER --capability-ambient-set="CAP_NET_ADMIN CAP_NET_RAW CAP_NET_BIND_SERVICE CAP_SYS_NICE CAP_SYS_TIME CAP_PERFMON CAP_BPF"
+sudo homectl update $USER --capability-ambient-set="cap_dac_override cap_net_bind_service cap_net_admin cap_net_raw cap_sys_nice cap_sys_resource cap_sys_time cap_perfmon cap_bpf"
 ```
 
 ```
@@ -118,15 +86,17 @@ sudo homectl update malwareslayer \
 
 # <file system> <dir> <type> <options> <dump> <pass>
 
-UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX       /               ext4            rw,relatime,journal_checksum,delalloc,data=ordered,discard     0 1
+UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX        /               ext4            rw,relatime,data=ordered,delalloc,discard,journal_checksum      0 1
 
-UUID=XXXX-XXXX          /efi            vfat            rw,relatime,fmask=0137,dmask=0027,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro  0 2
+UUID=XXXX-XXXX          /efi            vfat            rw,relatime,fmask=0137,dmask=0027,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0 2
 
-UUID=XXXX-XXXX          /boot           vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro  0 2
+UUID=XXXX-XXXX          /boot           vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0 2
 
 tmpfs                   /dev/shm        tmpfs           rw,relatime,size=16G 0 0
 
 tmpfs                   /run            tmpfs           rw,relatime,size=16G 0 0
 
 tmpfs                   /tmp            tmpfs           rw,relatime,size=8G 0 0
+
+hugetlbfs               /dev/hugepages  hugetlbfs       mode=01770,gid=kvm 0 0
 ```

@@ -1,0 +1,10 @@
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret
+[commit]
+	gpgSign = true
+[user]
+	email = 
+	name = 
+	signingKey = 
+[init]
+	defaultBranch = master

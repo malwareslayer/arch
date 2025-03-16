@@ -1,0 +1,39 @@
+[Unit]
+Description=MariaDB 11.6.2 database server
+Documentation=man:mariadbd(8)
+Documentation=https://mariadb.com/kb/en/library/systemd/
+After=network.target
+
+[Service]
+Type=notify
+TimeoutStartSec=1024
+TimeoutStopSec=1024
+
+Environment="LD_PRELOAD=/usr/lib/libjemalloc.so"
+
+StateDirectory=mysql
+StateDirectoryMode=0700
+
+ExecStart=/usr/bin/mariadbd $MYSQLD_OPTS
+KillSignal=SIGTERM
+SendSIGKILL=no
+
+Restart=on-failure
+RestartSec=16s
+
+UMask=007
+
+OOMScoreAdjust=-200
+
+AmbientCapabilities=CAP_IPC_LOCK CAP_DAC_OVERRIDE CAP_AUDIT_WRITE
+
+ProtectHome=false
+ProtectSystem=full
+
+PrivateDevices=false
+PrivateNetwork=false
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target
+

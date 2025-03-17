@@ -1,0 +1,40 @@
+[Unit]
+Description=Advanced key-value store
+After=network.target
+
+[Service]
+Type=notify
+
+RuntimeDirectory=redis
+RuntimeDirectoryMode=0755
+
+StateDirectory=redis
+StateDirectoryMode=0700
+
+ExecStart=/usr/bin/redis-server %h/.config/redis/redis.conf --supervised systemd
+
+Restart=on-failure
+RestartSec=32s
+
+TimeoutStartSec=60
+TimeoutStopSec=60
+
+AmbientCapabilities=CAP_SYS_RESOURCE CAP_IPC_LOCK CAP_SYS_NICE
+
+PrivateTmp=true
+PrivateDevices=true
+
+ProtectSystem=full
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=default.target
+

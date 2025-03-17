@@ -6,7 +6,6 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-TimeoutSec=120
 
 StateDirectory=postgres
 StateDirectoryMode=0700
@@ -25,17 +24,21 @@ ExecReload=/bin/kill -HUP ${MAINPID}
 KillMode=mixed
 KillSignal=SIGINT
 
-AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN CAP_DAC_OVERRIDE
+AmbientCapabilities=CAP_SYS_RESOURCE CAP_DAC_OVERRIDE
 
 OOMScoreAdjust=-200
 
-PrivateDevices=true
 PrivateTmp=true
+PrivateDevices=true
 
 ProtectControlGroups=true
 ProtectKernelModules=true
 ProtectKernelTunables=true
 ProtectSystem=full
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
 
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
 RestrictNamespaces=true

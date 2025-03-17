@@ -6,33 +6,41 @@ After=network.target
 
 [Service]
 Type=notify
-TimeoutStartSec=1024
-TimeoutStopSec=1024
-
-Environment="LD_PRELOAD=/usr/lib/libjemalloc.so"
 
 StateDirectory=mysql
 StateDirectoryMode=0700
 
-ExecStart=/usr/bin/mariadbd $MYSQLD_OPTS
+Environment="LD_PRELOAD=/usr/lib/libjemalloc.so"
+
+ExecStart=/usr/bin/mariadbd
+
 KillSignal=SIGTERM
 SendSIGKILL=no
 
 Restart=on-failure
-RestartSec=16s
+RestartSec=32s
+
+TimeoutStartSec=1024
+TimeoutStopSec=1024
 
 UMask=007
 
 OOMScoreAdjust=-200
 
-AmbientCapabilities=CAP_IPC_LOCK CAP_DAC_OVERRIDE CAP_AUDIT_WRITE
+AmbientCapabilities=CAP_SYS_RESOURCE CAP_IPC_LOCK CAP_SYS_NICE CAP_DAC_OVERRIDE CAP_AUDIT_WRITE
 
-ProtectHome=false
 ProtectSystem=full
 
-PrivateDevices=false
-PrivateNetwork=false
 PrivateTmp=true
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
 
 [Install]
 WantedBy=default.target

@@ -15,17 +15,26 @@ StateDirectoryMode=0700
 
 ExecStart=/usr/bin/tailscaled --statedir=%h/.local/state/tailscale --state=%h/.local/state/tailscale/tailscaled.state --socket=/run/user/%U/tailscale/tailscaled.sock --port=41641
 ExecStopPost=/usr/bin/tailscaled --cleanup
+
 Restart=on-failure
 RestartSec=32s
 
-AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW CAP_NET_ADMIN
+TimeoutStartSec=60
+TimeoutStopSec=60
+
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
 
 DeviceAllow=/dev/tun
 DeviceAllow=/dev/net/tun
 
-LockPersonality=true
+# PrivateTmp=true
+# PrivateDevices=true
 
+# ProtectSystem=full
+
+LockPersonality=true
 MemoryDenyWriteExecute=true
+NoNewPrivileges=true
 
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK AF_UNSPEC
 RestrictNamespaces=true

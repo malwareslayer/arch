@@ -1,0 +1,41 @@
+[Unit]
+Description=etcd key-value store
+Documentation=https://github.com/etcd-io/etcd
+After=network-online.target local-fs.target remote-fs.target time-sync.target
+Wants=network-online.target local-fs.target remote-fs.target time-sync.target
+
+[Service]
+Type=notify
+
+StateDirectory=etcd
+StateDirectoryMode=0700
+
+EnvironmentFile=-%h/.config/etcd
+
+Environment=ETCD_DATA_DIR=%h/.local/state/etcd
+Environment=ETCD_NAME=%m
+
+ExecStart=/usr/bin/etcd
+
+Restart=on-failure
+RestartSec=16s
+
+TimeoutStartSec=60
+TimeoutStopSec=60
+
+AmbientCapabilities=CAP_SYS_RESOURCE CAP_IPC_LOCK CAP_SYS_NICE
+
+ProtectSystem=full
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=default.target
+

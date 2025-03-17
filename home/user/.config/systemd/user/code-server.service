@@ -3,13 +3,27 @@ Description=code-server
 After=network.target
 
 [Service]
-Type=exec
+Type=simple
 
 Environment=PORT=8081
 
 ExecStart=/usr/bin/firejail --profile=code-server /usr/bin/code-server "%h"
 Restart=on-failure
 RestartSec=32s
+
+TimeoutStartSec=60
+TimeoutStopSec=60
+
+# ProtectSystem=strict
+
+# LockPersonality=true
+# MemoryDenyWriteExecute=true
+# NoNewPrivileges=true
+
+# RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK
+# RestrictNamespaces=true
+# RestrictRealtime=false
+# RestrictSUIDSGID=true
 
 [Install]
 WantedBy=default.target

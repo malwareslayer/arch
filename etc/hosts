@@ -1,8 +1,7 @@
 # Static table lookup for hostnames.
 # See hosts(5) for details.
 
-127.0.0.1       localhost f7bsc
-127.0.1.1       f7bsc.local f7bsc
+127.0.0.1       localhost
 
 ::1     ip6-localhost ip6-loopback
 fe00::0 ip6-localnet

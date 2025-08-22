@@ -1,6 +1,6 @@
 [Unit]
 Description=ZeroTier One
-After=network-online.target network.target
+After=network.target network-online.target
 Wants=network-online.target
 
 [Service]

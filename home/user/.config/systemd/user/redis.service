@@ -1,6 +1,7 @@
 [Unit]
 Description=Advanced key-value store
-After=network.target
+After=network.target network-online.target
+Wants=network-online.target
 
 [Service]
 Type=notify

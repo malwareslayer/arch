@@ -1,8 +1,8 @@
 [Unit]
 Description=Tailscale node agent
 Documentation=https://tailscale.com/kb/
-After=network-pre.target NetworkManager.service systemd-resolved.service
-Wants=network-pre.target
+After=network.target network-online.target
+Wants=network-online.target
 
 [Service]
 Type=notify
@@ -36,7 +36,7 @@ LockPersonality=true
 MemoryDenyWriteExecute=true
 NoNewPrivileges=true
 
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK AF_UNSPEC
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
 RestrictNamespaces=true
 RestrictRealtime=true
 RestrictSUIDSGID=true

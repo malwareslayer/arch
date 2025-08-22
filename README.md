@@ -19,60 +19,73 @@ homectl create <username> \
     --location="Asia/Jakarta" \
     --timezone="Asia/Jakarta" \
     --shell="/usr/bin/fish" \
+    --ssh-authorized-keys="" \
     --drop-caches=true \
     --fs-type=ext4 \
     --storage=luks \
     --luks-discard=false \
-    --luks-offline-discard=true \
-    --luks-sector-size=512 \
+    --luks-offline-discard=false \
+    --luks-sector-size=4096 \
     --luks-pbkdf-type=argon2id \
     --luks-pbkdf-hash-algorithm=sha256 \
     --luks-pbkdf-memory-cost=2048M \
-    --luks-pbkdf-parallel-threads 2 \
+    --luks-pbkdf-parallel-threads 4 \
+    --luks-extra-mount-options="rw,relatime,data=ordered,delalloc,commit=16,journal_ioprio=2,i_version" \
     --home-dir="/home/<user name>" \
     --image-path=/dev/nvmeXnY
+```
+
+Open
+```
+cryptsetup open /dev/nvmeXnYpZ home-user
+```
+
+Reformat Generated Disk With Tuning Disk
+
+```
+mkfs.ext4 -O ^64bit,^bigalloc,dir_index,dir_nlink,ea_inode,extent,fast_commit,filetype,extent,extra_isize,filetype,flex_bg,has_journal,^huge_file,large_dir,large_file,^metadata_csum,^metadata_csum_seed,^meta_bg,orphan_file,resize_inode,sparse_super,uninit_bg /dev/mapper/home-user
 ```
 
 After Installation
 
 ```
-sudo homectl update $USER --member-of="adm android-sdk audio dbus kvm network power proc realtime render rtkit storage uuidd video wheel"
+sudo homectl update <user> --member-of="adm,android-sdk,audio,dbus,gdm,kvm,network,power,proc,realtime,render,rtkit,storage,tss,uuidd,video,wheel"
 ```
 
 ```
-sudo homectl update $USER --capability-ambient-set="cap_dac_override cap_net_bind_service cap_net_admin cap_net_raw cap_ipc_lock cap_sys_nice cap_sys_resource cap_sys_time cap_audit_control cap_perfmon cap_bpf"
+sudo homectl update <user> --capability-ambient-set="CAP_AUDIT_CONTROL CAP_BPF CAP_DAC_OVERRIDE CAP_IPC_LOCK CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW CAP_PERFMON CAP_SYS_NICE CAP_SYS_RESOURCE CAP_SYS_TIME"
 ```
 
 ```
-sudo homectl update malwareslayer \
-    --setenv="GALLIUM_DRIVER=zink" \
-    --setenv="GDK_BACKEND=wayland" \
-    --setenv="GNOME_KEYRING_CONTROL=/run/user/60466/keyring" \
-    --setenv="GOBIN=/home/malwareslayer/.local/bin" \
-    --setenv="GOCACHE=/var/user/malwareslayer/cache/go/" \
-    --setenv="GOMODCACHE=/home/malwareslayer/.local/share/go/pkg/mod" \
-    --setenv="GOPATH=/home/malwareslayer/.local/share/go" \
-    --setenv="GRADLE_USER_HOME=/var/user/malwareslayer/gradle" \
-    --setenv="HSA_OVERRIDE_GFX_VERSION=11.0.3" \
-    --setenv="LIBVA_DRIVER_NAME=radeonsi" \
-    --setenv="MESA_LOADER_DRIVER_OVERRIDE=zink" \
-    --setenv="PYTORCH_ROCM_ARCH=gfx1103" \
-    --setenv="QT_AUTO_SCREEN_SCALE_FACTOR=1" \
-    --setenv="QT_QPA_PLATFORM=wayland;xcb" \
-    --setenv="ROCM_PATH=/opt/rocm" \
-    --setenv="SSH_AUTH_SOCK=/run/user/60466/gnupg/S.gpg-agent.ssh" \
-    --setenv="VDPAU_DRIVER=radeonsi" \
-    --setenv="VK_DRIVER_FILES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json" \
-    --setenv="VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json" \
-    --setenv="XDG_CACHE_HOME=/var/user/malwareslayer/cache" \
-    --setenv="XDG_CONFIG_DIRS=/etc/xdg" \
-    --setenv="XDG_CONFIG_HOME=/home/malwareslayer/.config" \
-    --setenv="XDG_DATA_DIRS=/usr/share:/usr/local/share:/home/malwareslayer/.local/share:/home/malwareslayer/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share" \
-    --setenv="XDG_DATA_HOME=/home/malwareslayer/.local/share" \
-    --setenv="XDG_RUNTIME_DIR=/run/user/60466" \
-    --setenv="XDG_STATE_HOME=/home/malwareslayer/.local/state" \
-    --setenv="__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json" \
-    --setenv="__GLX_VENDOR_LIBRARY_NAME=mesa"
+sudo homectl update <user> \
+                 --setenv="DISABLE_LAYER_AMD_SWITCHABLE_GRAPHICS_1=1" \
+                 --setenv="GALLIUM_DRIVER=zink" \
+                 --setenv="GDK_BACKEND=wayland" \
+                 --setenv="GNOME_KEYRING_CONTROL=/run/user/60466/keyring" \
+                 --setenv="GOBIN=/home/<user>/.local/bin" \
+                 --setenv="GOCACHE=/home/<user>/.cache/go" \
+                 --setenv="GOMODCACHE=/home/<user>/.local/share/go/pkg/mod" \
+                 --setenv="GOPATH=/home/<user>/.local/share/go" \
+                 --setenv="HSA_OVERRIDE_GFX_VERSION=11.0.1" \
+                 --setenv="LIBGL_KOPPER_DRI2=1" \
+                 --setenv="LIBVA_DRIVER_NAME=radeonsi" \
+                 --setenv="MESA_LOADER_DRIVER_OVERRIDE=radeonsi" \
+                 --setenv="PYTORCH_ROCM_ARCH=gfx1101" \
+                 --setenv="QT_QPA_PLATFORM=wayland" \
+                 --setenv="QT_QPA_PLATFORMTHEME=qt5ct" \
+                 --setenv="SSH_AUTH_SOCK=/run/user/60466/gnupg/S.gpg-agent.ssh" \
+                 --setenv="TZ=Asia/Jakarta" \
+                 --setenv="VK_DRIVER_FILES=/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/amd_icd64.json:/usr/share/vulkan/icd.d/lvp_icd.x86_64.json:/usr/share/vulkan/icd.d/lvp_icd.i686.json:/usr/share/vulkan/icd.d/gfxstream_vk_icd.x86_64.json:/usr/share/vulkan/icd.d/gfxstream_vk_icd.i686.json" \
+                 --setenv="VDPAU_DRIVER=radeonsi" \
+                 --setenv="XDG_CACHE_HOME=/home/<user>/.cache" \
+                 --setenv="XDG_CONFIG_DIRS=/etc/xdg" \
+                 --setenv="XDG_CONFIG_HOME=/home/<user>/.config" \
+                 --setenv="XDG_DATA_DIRS=/usr/share:/usr/local/share:/home/<user>/.local/share:/home/<user>/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share" \
+                 --setenv="XDG_DATA_HOME=/home/<user>/.local/share" \
+                 --setenv="XDG_RUNTIME_DIR=/run/user/60466" \
+                 --setenv="XDG_STATE_HOME=/home/<user>/.local/state" \
+                 --setenv="__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json" \
+                 --setenv="__GLX_VENDOR_LIBRARY_NAME=mesa"
 ```
 
 ## File System Table
@@ -83,7 +96,7 @@ sudo homectl update malwareslayer \
 
 # <file system> <dir> <type> <options> <dump> <pass>
 
-UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX        /               ext4            rw,relatime,data=ordered,delalloc,discard      0 1
+UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX        /               ext4            rw,relatime,data=ordered,delalloc,commit=16,journal_ioprio=2,i_version     0 1
 
 UUID=XXXX-XXXX          /efi            vfat            rw,relatime,fmask=0137,dmask=0027,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0 2
 

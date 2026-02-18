@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=notify
 
-ExecStart=/usr/bin/cloudflared tunnel --http2-origin --url http://127.0.0.1:3000
+ExecStart=/usr/bin/cloudflared tunnel --http2-origin
 
 Restart=on-failure
 RestartSec=32
@@ -14,7 +14,10 @@ RestartSec=32
 TimeoutStartSec=128
 TimeoutStopSec=128
 
-AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN CAP_BIND_SERVICE
+
+ProtectSystem=full
+PrivateTmp=true
 
 LockPersonality=true
 MemoryDenyWriteExecute=true

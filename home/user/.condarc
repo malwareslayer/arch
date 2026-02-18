@@ -1,15 +1,15 @@
 pkgs_dirs:
-  - /var/user/malwareslayer/conda/pkgs
+  - /home/malwareslayer/.local/share/conda/pkgs
 envs_dirs:
-  - /var/user/malwareslayer/conda/envs
+  - /home/malwareslayer/.local/share/conda/envs
 auto_activate_base: false
 channels:
-  - defaults
   - conda-forge
-  - pytorch
 channel_priority: strict
 create_default_packages:
   - python
   - pip
   - wheel
 changeps1: false
+proxy_servers:
+  http: http://127.0.0.1:40000

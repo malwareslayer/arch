@@ -1,0 +1,16 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+UUID=	 /         	ext4      	rw,relatime,data=ordered,delalloc,commit=16,journal_ioprio=2,iversion	0 1
+
+UUID=		/boot     	vfat      	rw,relatime,noexec,nodev,nosuid,umask=0177,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+UUID=      	/efi      	vfat      	rw,relatime,noexec,nodev,nosuid,umask=0177,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+tmpfs                   /tmp            tmpfs           rw,relatime,size=8G 0 0
+
+tmpfs                   /run            tmpfs           rw,relatime,size=2G 0 0
+
+tmpfs                   /dev/shm        tmpfs           rw,relatime,size=16G 0 0
+

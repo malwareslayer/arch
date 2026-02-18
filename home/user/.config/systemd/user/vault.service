@@ -1,0 +1,46 @@
+[Unit]
+Description="HashiCorp Vault - A tool for managing secrets"
+Documentation=https://developer.hashicorp.com/vault/docs
+BindsTo=sys-devices-virtual-net-vault0.device
+After=network.target network-online.target zerotier-one.service sys-devices-virtual-net-vault0.device
+Wants=network-online.target zerotier-one.service sys-devices-virtual-net-vault0.device
+
+[Service]
+Type=notify
+
+StateDirectory=vault
+StateDirectoryMode=0700
+
+ExecStartPre=/usr/bin/fping --ipv6 vault.user.home.arpa --count 1 --timeout 64
+ExecStart=/usr/bin/vault server -config=%h/.config/vault/vault.hcl
+ExecReload=/bin/kill --signal HUP $MAINPID
+
+KillMode=process
+KillSignal=SIGINT
+
+Restart=on-failure
+RestartSec=4
+
+TimeoutStartSec=128
+TimeoutStopSec=64
+
+SecureBits=keep-caps
+CapabilityBoundingSet=CAP_IPC_LOCK CAP_SET_FCAP
+AmbientCapabilities=CAP_SYSLOG CAP_IPC_LOCK CAP_SET_FCAP
+
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=full
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=default.target
+

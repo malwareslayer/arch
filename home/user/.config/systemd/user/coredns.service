@@ -1,0 +1,42 @@
+[Unit]
+Description=CoreDNS DNS server
+Documentation=https://coredns.io
+BindsTo=sys-devices-virtual-net-coredns0.device
+After=network.target network-online.target zerotier-one.service sys-devices-virtual-net-coredns0.device
+Wants=network-online.target zerotier-one.service sys-devices-virtual-net-coredns0.device
+
+[Service]
+Type=exec
+
+StateDirectory=coredns
+StateDirectoryMode=0700
+
+ExecStart=/usr/bin/coredns -conf=%h/.config/coredns/Corefile
+ExecReload=/bin/kill -SIGUSR1 $MAINPID
+
+Restart=on-failure
+RestartSec=4
+
+TimeoutStartSec=128
+TimeoutStopSec=64
+
+PrivateTmp=true
+PrivateDevices=true
+
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=full
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=default.target
+

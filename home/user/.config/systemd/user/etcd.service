@@ -1,0 +1,47 @@
+[Unit]
+Description=etcd
+Documentation=https://github.com/etcd-io/etcd
+BindsTo=sys-devices-virtual-net-etcd0.device
+After=network.target network-online.target zerotier-one.service sys-devices-virtual-net-etcd0.device
+Wants=network-online.target zerotier-one.service sys-devices-virtual-net-etcd0.device
+
+[Service]
+Type=notify
+
+Delegate=yes
+
+StateDirectory=etcd
+StateDirectoryMode=0700
+
+ExecStartPre=/usr/bin/fping --ipv6 etcd.user.home.arpa --count 1 --timeout 64
+ExecStart=/usr/bin/etcd --config-file %h/.config/etcd/etcd.yml
+
+Restart=on-failure
+RestartSec=4
+
+TimeoutStartSec=128
+TimeoutStopSec=64
+
+KillMode=mixed
+KillSignal=SIGINT
+
+PrivateTmp=true
+PrivateDevices=true
+
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=full
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=default.target
+

@@ -1,0 +1,33 @@
+[Unit]
+Description=Ollama
+Wants=network.target network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=exec
+
+Environment=OLLAMA_VULKAN=1
+
+ExecStart=/usr/bin/ollama serve
+
+Restart=on-failure
+RestartSec=32
+
+TimeoutStartSec=128
+TimeoutStopSec=128
+
+PrivateTmp=true
+ProtectSystem=full
+
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=default.target
+

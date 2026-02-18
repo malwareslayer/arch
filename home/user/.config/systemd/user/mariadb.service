@@ -1,9 +1,10 @@
 [Unit]
-Description=MariaDB 11.6.2 database server
+Description=MariaDB
 Documentation=man:mariadbd(8)
 Documentation=https://mariadb.com/kb/en/library/systemd/
-After=network.target network-online.target
-Wants=network-online.target
+BindsTo=sys-devices-virtual-net-mariadb0.device
+After=network.target network-online.target zerotier-one.service sys-devices-virtual-net-mariadb0.device
+Wants=network-online.target zerotier-one.service sys-devices-virtual-net-mariadb0.device
 
 [Service]
 Type=notify
@@ -13,25 +14,27 @@ StateDirectoryMode=0700
 
 Environment="LD_PRELOAD=/usr/lib/libjemalloc.so"
 
+ExecStartPre=/usr/bin/fping --ipv6 mariadb.user.home.arpa --count 1 --timeout 64
 ExecStart=/usr/bin/mariadbd
 
 KillSignal=SIGTERM
 SendSIGKILL=no
 
 Restart=on-failure
-RestartSec=32s
+RestartSec=4
 
-TimeoutStartSec=1024
-TimeoutStopSec=1024
+TimeoutStartSec=128
+TimeoutStopSec=64
 
 UMask=007
 
 OOMScoreAdjust=-200
 
-AmbientCapabilities=CAP_SYS_RESOURCE CAP_IPC_LOCK CAP_SYS_NICE CAP_DAC_OVERRIDE CAP_AUDIT_WRITE
+SecureBits=keep-caps
+CapabilityBoundingSet=CAP_IPC_LOCK
+AmbientCapabilities=CAP_IPC_LOCK
 
 ProtectSystem=full
-
 PrivateTmp=true
 
 LockPersonality=true

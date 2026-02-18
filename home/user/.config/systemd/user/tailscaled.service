@@ -17,20 +17,16 @@ ExecStart=/usr/bin/tailscaled --statedir=%h/.local/state/tailscale --state=%h/.l
 ExecStopPost=/usr/bin/tailscaled --cleanup
 
 Restart=on-failure
-RestartSec=32s
+RestartSec=4
 
-TimeoutStartSec=60
-TimeoutStopSec=60
+TimeoutStartSec=128
+TimeoutStopSec=64
 
-AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+SecureBits=keep-caps
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 
-DeviceAllow=/dev/tun
 DeviceAllow=/dev/net/tun
-
-# PrivateTmp=true
-# PrivateDevices=true
-
-# ProtectSystem=full
 
 LockPersonality=true
 MemoryDenyWriteExecute=true

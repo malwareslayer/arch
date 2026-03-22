@@ -13,7 +13,7 @@ Delegate=yes
 StateDirectory=etcd
 StateDirectoryMode=0700
 
-ExecStartPre=/usr/bin/fping --ipv6 etcd.user.home.arpa --count 1 --timeout 64
+ExecStartPre=/usr/bin/fping --ipv6 "etcd.$USER.home.arpa" --count 1 --timeout 64
 ExecStart=/usr/bin/etcd --config-file %h/.config/etcd/etcd.yml
 
 Restart=on-failure

@@ -18,7 +18,7 @@ RuntimeDirectoryMode=0700
 
 PIDFile=%h/.local/state/postgres/data/postmaster.pid
 
-ExecStartPre=/usr/bin/fping --ipv6 postgresql.user.home.arpa --count 1 --timeout 64
+ExecStartPre=/usr/bin/fping --ipv6 "postgresql.$USER.home.arpa" --count 1 --timeout 64
 ExecStartPre=/usr/bin/postgresql-check-db-dir ${PGROOT}/data
 ExecStart=/usr/bin/postgres -D ${PGROOT}/data
 ExecReload=/bin/kill -HUP ${MAINPID}

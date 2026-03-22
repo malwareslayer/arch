@@ -10,7 +10,7 @@ Type=notify
 StateDirectory=valkey
 StateDirectoryMode=0700
 
-ExecStartPre=/usr/bin/fping --ipv6 valkey.user.home.arpa --count 1 --timeout 64
+ExecStartPre=/usr/bin/fping --ipv6 "valkey.$USER.home.arpa" --count 1 --timeout 64
 ExecStart=/usr/bin/valkey-server %h/.config/valkey/valkey.conf --supervised systemd
 
 Restart=on-failure

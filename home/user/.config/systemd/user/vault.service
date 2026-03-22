@@ -11,7 +11,7 @@ Type=notify
 StateDirectory=vault
 StateDirectoryMode=0700
 
-ExecStartPre=/usr/bin/fping --ipv6 vault.user.home.arpa --count 1 --timeout 64
+ExecStartPre=/usr/bin/fping --ipv6 "vault.$USER.home.arpa" --count 1 --timeout 64
 ExecStart=/usr/bin/vault server -config=%h/.config/vault/vault.hcl
 ExecReload=/bin/kill --signal HUP $MAINPID
 

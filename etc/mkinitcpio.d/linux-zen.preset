@@ -11,6 +11,6 @@ default_uki="/efi/EFI/Linux/arch-linux-zen.efi"
 default_options="--cmdline /etc/kernel/cmdline-linux-zen --splash /usr/share/systemd/bootctl/splash-arch.bmp"
 
 #fallback_config="/etc/mkinitcpio.conf"
-fallback_image="/boot/initramfs-linux-zen-fallback.img"
+#fallback_image="/boot/initramfs-linux-zen-fallback.img"
 #fallback_uki="/efi/EFI/Linux/arch-linux-zen-fallback.efi"
-fallback_options="-S autodetect"
+#fallback_options="-S autodetect"

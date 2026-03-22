@@ -6,9 +6,9 @@ Wants=network-online.target
 [Service]
 Type=exec
 
-WorkingDirectory=/home/user/Marimo
+WorkingDirectory=%h/Marimo
 
-ExecStart=/home/user/.local/share/conda/envs/3.11/bin/python -m marimo edit \
+ExecStart=%h/.local/share/conda/envs/3.11/bin/python -m marimo edit \
 	--no-token \
 	--headless \
 

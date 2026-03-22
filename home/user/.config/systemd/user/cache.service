@@ -6,19 +6,17 @@ Before=graphical.target
 Type=oneshot
 RemainAfterExit=yes
 
-ExecStart=/usr/bin/rsync -a /var/user/malwareslayer/AMD/ /home/malwareslayer/.cache/AMD
-ExecStart=/usr/bin/rsync -a /var/user/malwareslayer/fontconfig/ /home/malwareslayer/.cache/fontconfig
-ExecStart=/usr/bin/rsync -a /var/user/malwareslayer/mesa_shader_cache/ /home/malwareslayer/.cache/mesa_shader_cache
-ExecStart=/usr/bin/rsync -a /var/user/malwareslayer/mesa_shader_cache_db/ /home/malwareslayer/.cache/mesa_shader_cache_db
-ExecStart=/usr/bin/rsync -a /var/user/malwareslayer/radv_builtin_shaders/ /home/malwareslayer/.cache/radv_builtin_shaders
-ExecStart=/usr/bin/rsync -a /var/user/malwareslayer/shadercache/ /var/user/malwareslayer/steam/steamapps/shadercache
+ExecStart=/usr/bin/rsync -a /var/user/$USER/AMD/ /home/$USER/.cache/AMD
+ExecStart=/usr/bin/rsync -a /var/user/$USER/fontconfig/ /home/$USER/.cache/fontconfig
+ExecStart=/usr/bin/rsync -a /var/user/$USER/mesa_shader_cache/ /home/$USER/.cache/mesa_shader_cache
+ExecStart=/usr/bin/rsync -a /var/user/$USER/mesa_shader_cache_db/ /home/$USER/.cache/mesa_shader_cache_db
+ExecStart=/usr/bin/rsync -a /var/user/$USER/radv_builtin_shaders/ /home/$USER/.cache/radv_builtin_shaders
 
-ExecStop=/usr/bin/rsync -a /dev/shm/AMD/ /var/user/malwareslayer/AMD
-ExecStop=/usr/bin/rsync -a /dev/shm/fontconfig/ /var/user/malwareslayer/fontconfig
-ExecStop=/usr/bin/rsync -a /dev/shm/mesa_shader_cache/ /var/user/malwareslayer/mesa_shader_cache
-ExecStop=/usr/bin/rsync -a /dev/shm/mesa_shader_cache_db/ /var/user/malwareslayer/mesa_shader_cache_db
-ExecStop=/usr/bin/rsync -a /dev/shm/radv_builtin_shaders/ /var/user/malwareslayer/radv_builtin_shaders
-ExexStop=/usr/bin/rsync -a /dev/shm/shadercache/ /var/user/malwareslayer/shadercache
+ExecStop=/usr/bin/rsync -a /dev/shm/AMD/ /var/user/$USER/AMD
+ExecStop=/usr/bin/rsync -a /dev/shm/fontconfig/ /var/user/$USER/fontconfig
+ExecStop=/usr/bin/rsync -a /dev/shm/mesa_shader_cache/ /var/user/$USER/mesa_shader_cache
+ExecStop=/usr/bin/rsync -a /dev/shm/mesa_shader_cache_db/ /var/user/$USER/mesa_shader_cache_db
+ExecStop=/usr/bin/rsync -a /dev/shm/radv_builtin_shaders/ /var/user/$USER/radv_builtin_shaders
 
 [Install]
 WantedBy=default.target

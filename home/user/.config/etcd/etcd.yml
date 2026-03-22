@@ -1,13 +1,13 @@
 # This is the configuration file for the etcd server.
 
 # Human-readable name for this member.
-name: 'malwareslayer'
+#name: 'user'
 
 # Path to the data directory.
-data-dir: /home/malwareslayer/.local/state/etcd
+#data-dir:
 
 # Path to the dedicated wal directory.
-wal-dir: /home/malwareslayer/.local/share/etcd
+#wal-dir:
 
 # Number of committed transactions to trigger a snapshot to disk.
 snapshot-count: 8192
@@ -61,19 +61,19 @@ enable-pprof: true
 # Valid values include 'on', 'readonly', 'off'
 proxy: 'off'
 
-client-transport-security:
-  cert-file: /home/user/.config/letsencrypt/live/etcd.user.home.arpa/fullchain.pem
-  key-file: /home/user/.config/letsencrypt/live/etcd.user.home.arpa/privkey.pem
-  client-cert-auth: false
-  trusted-ca-file: /home/user/.config/letsencrypt/live/etcd.user.home.arpa/chain.pem
-  auto-tls: false
+# client-transport-security:
+#  cert-file:
+#  key-file:
+#  client-cert-auth: false
+#  trusted-ca-file:
+#  auto-tls: false
 
-peer-transport-security:
-  cert-file: /home/user/.config/letsencrypt/live/etcd.user.home.arpa/fullchain.pem
-  key-file: /home/user/.config/letsencrypt/live/etcd.user.home.arpa/privkey.pem
-  client-cert-auth: false
-  trusted-ca-file: /home/user/.config/letsencrypt/live/etcd.user.home.arpa/chain.pem
-  auto-tls: false
+# peer-transport-security:
+#  cert-file:
+#  key-file:
+#  client-cert-auth: false
+#  trusted-ca-file:
+#  auto-tls: false
 
 self-signed-cert-validity: 1
 

@@ -4,30 +4,24 @@ api_addr = "https://vault.malwareslayer.home.arpa"
 ui = true
 
 storage "etcd" {
-  address = "https://etcd.user.home.arpa:2379"
+  address = "http://127.0.0.1:2379"
   etcd_api = "v3"
-  tls_ca_file = "/home/user/.config/letsencrypt/live/etcd.user.home.arpa/chain.pem"
-  tls_cert_file = "/home/user/.config/letsencrypt/live/etcd.user.home.arpa/fullchain.pem"
-  tls_key_file = "/home/user/.config/letsencrypt/live/etcd.user.home.arpa/privkey.pem"
+  #tls_ca_file =
+  #tls_cert_file =
+  #tls_key_file =
 }
 
 # HTTPS listener
 listener "tcp" {
   address = "127.0.0.1:8200"
-  tls_cert_file = "/home/user/.config/letsencrypt/live/vault.user.home.arpa/fullchain.pem"
-  tls_key_file = "/home/user/.config/letsencrypt/live/vault.user.home.arpa/privkey.pem"
+  #tls_cert_file = 
+  #tls_key_file =
 }
 
 #listener "tcp" {
   #address = "[::1]:8200"
   #tls_disable = 1
 #}
-
-listener "tcp" {
-  address = "[fc93:825a:fa8a:e6d2:4cea:dead:c0de:8200]:443"
-  tls_cert_file = "/home/user/.config/letsencrypt/live/vault.user.home.arpa/fullchain.pem"
-  tls_key_file = "/home/user/.config/letsencrypt/live/vault.user.home.arpa/privkey.pem"
-}
 
 # Enterprise license_path
 # This will be required for enterprise as of v1.8

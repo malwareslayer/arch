@@ -5,11 +5,11 @@ if status is-interactive
 end
 
 if not contains "/home/$USER/.local/bin" $PATH
-  set PATH $PATH /home/malwareslayer/.local/bin
+  set PATH $PATH /home/$USER/.local/bin
 end
 
 if not contains "/home/$USER/.cargo/bin" $PATH
-  set PATH $PATH /home/malwareslayer/.cargo/bin
+  set PATH $PATH /home/$USER/.cargo/bin
 end
 
 set GPG_TTY (tty)

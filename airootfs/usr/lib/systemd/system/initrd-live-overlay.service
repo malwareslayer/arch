@@ -1,0 +1,14 @@
+[Unit]
+Description=Initialize live squashfs + overlay root
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=systemd-udevd.service
+Before=initrd-root-fs.target initrd-parse-etc.service initrd-switch-root.target initrd-switch-root.service
+Wants=initrd-root-fs.target initrd-switch-root.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/initcpio/overlay-systemd
+StandardOutput=journal
+StandardError=journal
+RemainAfterExit=yes

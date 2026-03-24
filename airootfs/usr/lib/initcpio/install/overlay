@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+build() {
+    add_module 'overlay'
+    add_module 'loop'
+
+    add_binary bash
+    add_binary blkid
+    add_binary cp
+    add_binary dd
+    add_binary find
+    add_binary head
+    add_binary losetup
+    add_binary mount
+    add_binary sleep
+    add_binary du
+    add_binary awk
+    add_binary grep
+    add_binary cut
+    add_binary tail
+    add_binary truncate
+    add_binary mkfs.ext4
+    add_binary umount
+    if command -v plymouth >/dev/null 2>&1; then
+        add_binary plymouth
+    fi
+
+    add_file /usr/lib/initcpio/overlay-systemd /usr/lib/initcpio/overlay-systemd
+
+    if declare -F add_systemd_unit >/dev/null; then
+        add_systemd_unit initrd-live-overlay.service
+        add_symlink /usr/lib/systemd/system/initrd.target.wants/initrd-live-overlay.service ../initrd-live-overlay.service
+        add_symlink /usr/lib/systemd/system/initrd-root-fs.target.wants/initrd-live-overlay.service ../initrd-live-overlay.service
+    else
+        add_runscript
+    fi
+}
+
+help() {
+    cat <<HELPEOF
+Custom live root hook for non-ISO partition layout.
+Kernel options:
+  live.dev=<LABEL=..|UUID=..|PARTUUID=..|/dev/...>    (required)
+  live.squashfs=<LABEL=..|UUID=..|PARTUUID=..|/dev/...> (optional, dedicated squashfs partition)
+  live.dir=<directory containing squashfs>             (default: /squashfs)
+  live.image=<squashfs filename>                       (default: airootfs.sfs)
+  live.overlay=<LABEL=..|UUID=..|PARTUUID=..|/dev/...> (optional, persistent)
+  live.overlaytmpfs=<tmpfs mount path>                 (default: /run/live/overlaytmp)
+  live.overlaytmpfs_size=<tmpfs size>                  (default: 50%)
+  copytoram=<auto|y|n>                                 (default: auto)
+  copytoram_size=<tmpfs size>                          (default: 90%)
+HELPEOF
+}

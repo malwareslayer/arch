@@ -1,0 +1,58 @@
+.:53 {
+  bind 127.0.0.1 ::1
+  
+  cache 8192
+
+  forward . tls://45.90.28.0 tls://45.90.30.0 {
+    tls_servername ea96cf.dns.nextdns.io
+    policy round_robin
+    max_fails 8
+    health_check 16s
+  }
+
+  forward . tls://1.1.1.1 tls://1.0.0.1 {
+    tls_servername one.one.one.one
+    policy round_robin
+    max_fails 4
+    health_check 8s
+  }
+
+  forward . tls://8.8.8.8 tls://8.8.4.4 {
+    tls_servername dns.google
+    policy round_robin
+    max_fails 2
+    health_check 4s
+  }
+
+  loadbalance
+}
+
+.:853 {
+  bind 127.0.0.1 ::1
+
+  cache 8192
+
+  forward . tls://2a07:a8c0::ea:96cf tls://2a07:a8c1::ea:96cf {
+    tls_servername ea96cf.dns.nextdns.io
+    policy round_robin
+    max_fails 8
+    health_check 16s
+  }
+
+  forward . tls://2606:4700:4700::1111 tls://2606:4700:4700::1001 {
+    tls_servername one.one.one.one
+    policy round_robin
+    max_fails 4
+    health_check 8s
+  }
+
+  forward . tls://2001:4860:4860::8888 tls://2001:4860:4860::8844 {
+    tls_servername dns.google
+    policy round_robin
+    max_fails 2
+    health_check 4s
+  }
+
+  loadbalance
+}
+

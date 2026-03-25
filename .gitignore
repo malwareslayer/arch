@@ -13,3 +13,9 @@ pkg/
 src/
 
 .idea/
+
+work/
+
+iso/
+
+out/

@@ -6,6 +6,7 @@ apparmor
 archiso
 base
 base-devel
+bash-completion
 bind
 bluez
 bolt
@@ -36,9 +37,14 @@ gnome-shell
 gnome-shell-extensions
 gnome-shell-extension-appindicator
 gnome-software
+gst-plugins-base
+gst-plugins-bad
+gst-plugins-good
+gst-plugins-ugly
 intel-ucode
 iw
 iwd
+less
 linux-firmware
 linux-firmware-amdgpu
 linux-firmware-broadcom
@@ -84,4 +90,9 @@ ttf-ubuntu-nerd
 vulkan-intel
 vulkan-radeon
 wireplumber
+which
 xdg-desktop-portal-gnome
+xdg-desktop-portal-gtk
+xdg-user-dirs
+xdg-user-dirs-gtk
+xdg-utils

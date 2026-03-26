@@ -59,7 +59,7 @@ mkinitcpio-archiso
 modemmanager
 nautilus
 networkmanager
-nvim
+neovim
 pam
 pipewire
 pipewire-audio

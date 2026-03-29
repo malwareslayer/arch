@@ -1,5 +1,0 @@
-#!/usr/bin/bash
-
-run_hook() {
-    /usr/lib/initcpio/overlay-systemd /new_root
-}
